@@ -3,10 +3,12 @@ import { TextField, Button, ButtonGroup } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Searchbar(props) {
-    const { onSearch, search_history } = props;
+    const { onSearch, searchHistory } = props;
 
     return (
-    <ButtonGroup>
+    <ButtonGroup
+        sx={{ padding: 2 }}
+        >
         <TextField
             id="searchTerm"
             type="search"
