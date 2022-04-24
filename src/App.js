@@ -2,50 +2,31 @@ import React, { useState } from 'react';
 import { Stack, Typography } from '@mui/material';
 import './App.css';
 import Appbar from './Appbar';
-import Searchbar from './Searchbar';
-import SearchResultCard from './SearchResultCard';
-
-  // for testing purposes
-  const results = [
-    { title: "Google", snapshot: "This is google.com", url: "www.google.com" },
-    { title: "Bing", snapshot: "This is bing.com", url: "www.bing.com" },
-    { title: "Yahoo", snapshot: "This is yahoo.com", url: "www.yahoo.com" }
-  ]
+import SearchPage from './SearchPage';
 
 function App() {
 
-  const [searchTerm, setSearchTerm] = useState("");
+  // state for the entire application
   const [searchHistory, setSearchHistory] = useState([]);
   const [visitHistory, setVisitHistory] = useState([]);
+
+  function addSearch(search) {
+    setSearchHistory(history => history.push(search))
+  }
+
+  function addVisit(visit) {
+    setVisitHistory(history => history.push(visit))
+  }
 
   return (
     <div className="App">
       <Appbar />
-      <div>
-        <Searchbar 
-          searchHistory={searchHistory}
-          onSearch={() => {}}
-        />
-      </div>
-      <Stack
-        alignItems='center'
-        >
-        {/* {results.map(result => {
-          <SearchResultCard
-            searchTerm={searchTerm}
-            // onVisit={visitRecord => {}}
-            title={result.title}
-            snapshot={result.snapshot}
-            url={result.url}
-          />
-        })} */}
-        <SearchResultCard
-          searchTerm={searchTerm}
-          title={'Google'}
-          snapshot={'This is google.com'}
-          url={'www.google.com'}
-        />
-      </Stack>
+      <SearchPage
+            searchHistory={searchHistory}
+            addSearch={addSearch}
+            visitHistory={visitHistory}
+            addVisit={addVisit}
+      />
     </div>
   );
 }
