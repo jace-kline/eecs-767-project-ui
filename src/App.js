@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Stack, Typography } from '@mui/material';
+import { BrowserRouter as Router, Navigate, Route, Routes } from "react-router-dom";
 import './App.css';
 import Appbar from './Appbar';
 import SearchPage from './SearchPage';
@@ -7,26 +7,60 @@ import SearchPage from './SearchPage';
 function App() {
 
   // state for the entire application
-  const [searchHistory, setSearchHistory] = useState([]);
-  const [visitHistory, setVisitHistory] = useState([]);
+  const [searches, setSearches] = useState([]);
+  const [visits, setVisits] = useState([]);
 
   function addSearch(search) {
-    setSearchHistory(history => history.push(search))
+    setSearches(history => [...history, search])
   }
 
   function addVisit(visit) {
-    setVisitHistory(history => history.push(visit))
+    setVisits(history => [...history, visit])
   }
 
   return (
     <div className="App">
-      <Appbar />
-      <SearchPage
-            searchHistory={searchHistory}
-            addSearch={addSearch}
-            visitHistory={visitHistory}
-            addVisit={addVisit}
-      />
+      <Router>
+        <Routes>
+          <Route 
+            path='/'
+            element={
+              <>
+                <Appbar />
+                <SearchPage
+                  searches={searches}
+                  visits={visits}
+                  addSearch={addSearch}
+                  addVisit={addVisit}
+                />
+              </>
+            }
+          />
+          <Route 
+            path='/searches'
+            element={
+              <>
+                <Appbar />
+                Searches
+                {searches.map((s, i) => s)}
+              </>
+            }
+          />
+          <Route 
+            path='/visits'
+            element={
+              <>
+                <Appbar />
+                Visits
+              </>
+            }
+          />
+          <Route 
+            path='*' 
+            element={<Navigate to='/' />} 
+          />
+        </Routes>
+      </Router>
     </div>
   );
 }

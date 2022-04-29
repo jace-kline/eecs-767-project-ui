@@ -1,21 +1,20 @@
-import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import DialogBox from './DialogBox';
+import { useNavigate } from "react-router-dom";
 
-const pages = ['Search History', 'Visit History'];
+const pages = [
+  { display: 'Search', link: '/'},
+  { display: 'Searches', link: '/searches'}, 
+  { display: 'Visits', link: '/visits'}
+];
 
-function Appbar(props) {
-  const { searchHistory, visitHistory } = props;
+function Appbar() {
 
-  // null = default page
-  // 'Search History' = search history
-  // 'Visit History' = visit history
-  const [view, setView] = useState(null);
+  let navigate = useNavigate();
 
   return (
     <>
@@ -34,11 +33,11 @@ function Appbar(props) {
           <Box sx={{ flexGrow: 1, display: { xs: 'flex' } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={() => setView(page)}
+                key={page.display}
+                onClick={() => navigate(page.link)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page}
+                {page.display}
               </Button>
             ))}
           </Box>

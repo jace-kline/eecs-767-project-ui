@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TextField, Button, ButtonGroup } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Searchbar(props) {
-    const { onSearch, searchHistory } = props;
+    const { onSearch, searches } = props;
+    const [search, setSearch] = useState("");
 
     return (
     <ButtonGroup
@@ -13,12 +14,14 @@ export default function Searchbar(props) {
             id="searchTerm"
             type="search"
             label="Search"
-            onChange={() => {}}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
         />
         <Button 
             variant='contained'
+            disabled={search == ""}
             startIcon={<SearchIcon />}
-            onClick={() => {}}
+            onClick={() => onSearch(search) }
         >
             Search
         </Button>
