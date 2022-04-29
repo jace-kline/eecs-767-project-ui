@@ -1,10 +1,11 @@
-import React, { useMemo, useState } from 'react';
-import { Box, Stack, Typography } from '@mui/material';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Box, Button, Checkbox, Stack, Typography } from '@mui/material';
 import './App.css';
 import Searchbar from './Searchbar';
 import SearchResultCard from './SearchResultCard';
 import useAsync from './hooks/useAsync';
-import api from './requests/mock-api';
+// import api from './requests/mock-api';
+import api from './requests/api';
 // import { useNavigate } from 'react-router-dom';
 
 function SearchPage(props) {
@@ -16,16 +17,30 @@ function SearchPage(props) {
 
     // last submitted search term
     const [search, setSearch] = useState(null);
+    const [feedbackSignal, setFeedbackSignal] = useState(false);
 
-    // paths marked "relevant"
-    const [relevant, setRelevant] = useState(null);
+    const submitFeedback = () => setFeedbackSignal(s => !s);
 
     // results list - fetched asynchronously
     const results = useAsync(
-      () => api.search(search, 20, relevant),
-      [ search, relevant ]
+      () => api.query(search, 20, relevant),
+      [ search, feedbackSignal ]
     );
-    // const results = { data: null };
+
+    // paths marked "relevant"
+    const [relevant, setRelevant] = useState([]);
+
+    useEffect(() => setRelevant([]), [ search, feedbackSignal ]);
+
+    const isRelevant = path => relevant.includes(path);
+
+    const toggleRelevant = path => {
+      const filtered = relevant.filter(p => p !== path);
+      setRelevant(
+        filtered.length === relevant.length
+        ? [...filtered, path]
+        : filtered);
+    };
 
     // when a search is submitted
     const onSearch = s => {
@@ -44,25 +59,50 @@ function SearchPage(props) {
     };
 
     return (
-      <Box sx={{ width: '100%' }}>
-        <Stack alignItems='center' spacing={1} >
-            <Searchbar 
-                searches={searches}
-                onSearch={onSearch}
-            />
-            { results.data
+          <Stack alignItems='center' width='100%' spacing={1} >
+            <Stack 
+              direction='horizontal'
+              alignContent='center'
+              padding={2}
+              marginLeft='50%'
+              width='100%'
+              >
+              <Searchbar 
+                  searches={searches}
+                  onSearch={onSearch}
+              />
+              <Button
+                onClick={submitFeedback}
+                variant='contained'
+                disabled={relevant.length === 0}
+                color='secondary'
+              >
+                Provide Feedback
+              </Button>
+            </Stack>
+            { results.data && results.data.length > 0
             ? results.data.map((result, i) =>
-                <SearchResultCard
-                    onClick={() => onVisit(result.path)}
-                    path={result.path}
-                    fname={result.fname}
-                    rank={i + 1}
-                    score={result.score}
-                />)
+                <Stack
+                  key={i}
+                  direction='horizontal'
+                  width='100%'
+                  >
+                  <Checkbox
+                    checked={isRelevant(result.path)}
+                    onChange={() => toggleRelevant(result.path)}
+                    />
+                  <SearchResultCard
+                      onClick={() => onVisit(result.path)}
+                      path={result.path}
+                      fname={result.fname}
+                      rank={i + 1}
+                      score={result.score}
+                  />
+                </Stack>
+              )
             : "Loading..."
             }
         </Stack>
-      </Box>
     )
 }
 

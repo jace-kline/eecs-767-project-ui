@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-const API_PORT = '4000';
-const API_HOST = 'localhost';
+const API_PORT = '8000';
+const API_HOST = '127.0.0.1';
 // export const API_PREFIX = 'api'
-const API_URL = `http://${API_HOST}:${API_PORT}/api`
+const API_URL = `http://${API_HOST}:${API_PORT}/api`;
 
 const axiosInstance = axios.create({
     baseURL: API_URL,

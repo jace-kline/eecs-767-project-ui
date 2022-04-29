@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, ButtonGroup } from '@mui/material';
+import { TextField, Button, Stack, ButtonGroup } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 export default function Searchbar(props) {
@@ -7,9 +7,7 @@ export default function Searchbar(props) {
     const [search, setSearch] = useState("");
 
     return (
-    <ButtonGroup
-        sx={{ padding: 2 }}
-        >
+    <Stack direction='horizontal'>
         <TextField
             id="searchTerm"
             type="search"
@@ -19,12 +17,12 @@ export default function Searchbar(props) {
         />
         <Button 
             variant='contained'
-            disabled={search == ""}
+            disabled={search === ""}
             startIcon={<SearchIcon />}
             onClick={() => onSearch(search) }
         >
             Search
         </Button>
-    </ButtonGroup>
+    </Stack>
     );
 }

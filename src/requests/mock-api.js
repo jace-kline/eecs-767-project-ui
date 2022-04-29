@@ -1,5 +1,5 @@
 const api = {
-    search,
+    query,
     getFile
 };
 
@@ -47,7 +47,7 @@ function generateResults(n=20) {
     return results;
 }
 
-async function search(search="", num_results=20, relevant=null) {
+async function query(query="", num_results=20, relevant=null) {
     return generateResults(num_results);
 }
 
