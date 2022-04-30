@@ -51,11 +51,17 @@ function SearchPage(props) {
       // fetch the ranked results from API '/search' endpoint
     };
 
+    const openInNewTab = (url) => {
+      const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+      if (newWindow) newWindow.opener = null
+    }
+
     // when a result is clicked on
     const onVisit = path => {
       // add visit to visit history
       addVisit(path);
       // view the local file
+      openInNewTab(api.DOCS_ENDPOINT + path);
     };
 
     return (
@@ -94,9 +100,9 @@ function SearchPage(props) {
                   <SearchResultCard
                       onClick={() => onVisit(result.path)}
                       path={result.path}
-                      fname={result.fname}
-                      rank={i + 1}
-                      score={result.score}
+                      // fname={result.fname}
+                      // rank={i + 1}
+                      // score={result.score}
                   />
                 </Stack>
               )

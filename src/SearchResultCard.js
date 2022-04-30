@@ -6,7 +6,16 @@ import { CardActionArea } from '@mui/material';
 
 export default function SearchResultCard(props) {
 
-    const { onClick, path, fname, rank, score } = props;
+    const { onClick, path } = props;
+
+    const fnameFromPath = p => {
+        let segs = p.split('/');
+        return segs[segs.length - 1]
+    }
+
+    const fname = !props.fname 
+    ? fnameFromPath(path)
+    : props.fname;
 
     return (
         <Card sx={{ minWidth: '75%' }}>

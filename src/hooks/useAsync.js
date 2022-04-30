@@ -6,6 +6,7 @@ export default function useAsync(promiseFn, deps) {
     const [data, setData] = useState(null);
 
     function execute() {
+        setError(false);
         setLoading(true);
         promiseFn()
         .then(res => { setData(res) })

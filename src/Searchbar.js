@@ -17,7 +17,7 @@ export default function Searchbar(props) {
         />
         <Button 
             variant='contained'
-            disabled={search === ""}
+            disabled={search === "" || search === null}
             startIcon={<SearchIcon />}
             onClick={() => onSearch(search) }
         >
