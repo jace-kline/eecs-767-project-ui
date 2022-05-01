@@ -2,9 +2,8 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
+import { ButtonGroup } from '@mui/material';
 
 const pages = [
   { display: 'Search', link: '/'},
@@ -13,38 +12,26 @@ const pages = [
 ];
 
 function Appbar() {
-
-  let navigate = useNavigate();
-
   return (
-    <>
     <AppBar position="static">
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
+      <Toolbar>
+        <Box
+          display='flex'
+          flexDirection='row'
+          flexGrow={1}
+          justifyContent='center'
+          alignContent='center'
+        >
           <Typography
-            variant="h6"
+            variant="h5"
             noWrap
             component="div"
-            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            Filesystem Search
+            File System Search
           </Typography>
-        
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page.display}
-                onClick={() => navigate(page.link)}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-              >
-                {page.display}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </Container>
+        </Box>
+      </Toolbar>
     </AppBar>
-    </>
   );
   
 };

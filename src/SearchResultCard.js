@@ -18,17 +18,22 @@ export default function SearchResultCard(props) {
     : props.fname;
 
     return (
-        <Card sx={{ minWidth: '75%' }}>
-        <CardActionArea onClick={onClick}>
-            <CardContent>
-            <Typography gutterBottom variant="h6" component="div">
-                {fname}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                {path}
-            </Typography>
-            </CardContent>
-        </CardActionArea>
+        <Card
+            raised
+            sx={{ width: '100%'}}
+        >
+            <CardActionArea onClick={onClick}>
+                <CardContent
+                    sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+                >
+                    <Typography gutterBottom variant="h6" component="div">
+                        {fname}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                        {path}
+                    </Typography>
+                </CardContent>
+            </CardActionArea>
         </Card>
     );
 }

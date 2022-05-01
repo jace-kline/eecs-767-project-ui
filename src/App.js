@@ -37,25 +37,6 @@ function App() {
             }
           />
           <Route 
-            path='/searches'
-            element={
-              <>
-                <Appbar />
-                Searches
-                {searches.map((s, i) => s)}
-              </>
-            }
-          />
-          <Route 
-            path='/visits'
-            element={
-              <>
-                <Appbar />
-                Visits
-              </>
-            }
-          />
-          <Route 
             path='*' 
             element={<Navigate to='/' />} 
           />

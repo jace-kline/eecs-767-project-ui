@@ -4,22 +4,24 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function Searchbar(props) {
     const { onSearch, searches } = props;
-    const [search, setSearch] = useState("");
+    const [searchTerm, setSearchTerm] = useState("");
 
     return (
-    <Stack direction='horizontal'>
+    <Stack 
+        direction='horizontal'
+        padding={2}>
         <TextField
             id="searchTerm"
             type="search"
             label="Search"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
         />
         <Button 
             variant='contained'
-            disabled={search === "" || search === null}
+            disabled={searchTerm === "" || searchTerm === null}
             startIcon={<SearchIcon />}
-            onClick={() => onSearch(search) }
+            onClick={() => onSearch(searchTerm) }
         >
             Search
         </Button>

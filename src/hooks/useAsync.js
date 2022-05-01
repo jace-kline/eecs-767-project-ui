@@ -1,9 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 
-export default function useAsync(promiseFn, deps) {
-    const [loading, setLoading] = useState(true);
+export default function useAsync(promiseFn, deps, immediate=false) {
+    const [loading, setLoading] = useState(null);
     const [error, setError] = useState(null);
     const [data, setData] = useState(null);
+
+    const didMount = useRef(immediate);
 
     function execute() {
         setError(false);
@@ -15,7 +17,8 @@ export default function useAsync(promiseFn, deps) {
     }
 
     useEffect(() => {
-        execute()
+        if(didMount.current) execute()
+        else didMount.current = true;
     }, deps);
 
     return { loading, error, data };
